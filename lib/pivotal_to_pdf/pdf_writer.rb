@@ -5,12 +5,13 @@ require 'prawn'
 require 'rainbow'
 
 module PivotalToPdf
-  class PdfWriter
+  class DefaultCardFormat
+
     attr_reader :story_or_iteration, :stories
+
     def initialize(story_or_iteration, colored_stripe = true)
       @story_or_iteration = story_or_iteration
       @stories = story_or_iteration.is_a?(Iteration) ? story_or_iteration.stories : [story_or_iteration]
-      p stories.size
     end
 
     def write_to
