@@ -8,7 +8,7 @@ require 'pivotal_to_pdf/simple_text_formatter'
 require 'pivotal_to_pdf/pivotal'
 require 'pivotal_to_pdf/iteration'
 require 'pivotal_to_pdf/story'
-require 'pivotal_to_pdf/pdf_writer'
+require 'pivotal_to_pdf/default_card_format'
 
 module PivotalToPdf
   class Main < Thor
