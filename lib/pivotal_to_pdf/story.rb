@@ -2,12 +2,17 @@ module PivotalToPdf
   class Story < Pivotal
     def label_text
       return "" if !self.respond_to?(:labels) || self.labels.nil? || self.labels.empty?
-      labels
+      labels.gsub(',', ',  ')
     end
 
     def points
-      return nil unless self.feature?
+      return "" unless self.feature?
       "Points: " + (self.respond_to?(:estimate) && !self.estimate.eql?(-1) ? self.estimate.to_s : "Not yet estimated")
+    end
+
+    def state
+      return "" if self.current_state.nil?
+      self.current_state.capitalize
     end
 
     def story_color

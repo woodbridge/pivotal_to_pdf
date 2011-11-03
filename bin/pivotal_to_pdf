@@ -10,11 +10,24 @@ class PivotalToPdfApp < Thor
     PivotalToPdf::Main.story story_id, options[:nocolor]
   end
 
+  desc "stories", "print current and backlog stories"
+  def stories( iteration_group = "current_and_backlog")  
+    PivotalToPdf::Main.stories iteration_group
+  end
+
   desc "iteration", "print stories for the current iteration into a PDF file"
   method_option :nocolor, :aliases => "-nc", :desc => "Make the card having no color stripe"
-  def iteration(iteration_number = "current")
-    PivotalToPdf::Main.iteration iteration_number, options[:nocolor]
+  def iteration(iteration_group = "current")
+    PivotalToPdf::Main.iteration iteration_group, options[:nocolor]
   end
+  
+  desc "iterations", "print stories for the current iteration into a PDF file"
+  method_option :nocolor, :aliases => "-nc", :desc => "Make the card having no color stripe"
+  def iterations(iteration_group = "current")
+    PivotalToPdf::Main.iterations iteration_group, options[:nocolor]
+  end
+    
 end
 
 PivotalToPdfApp.start
+

@@ -9,13 +9,14 @@ require 'pivotal_to_pdf/pivotal'
 require 'pivotal_to_pdf/iteration'
 require 'pivotal_to_pdf/story'
 require 'pivotal_to_pdf/default_card_format'
+require 'pivotal_to_pdf/large_text_card_format'
 
 module PivotalToPdf
   class Main < Thor
     class << self
 
       def card_format
-	CardFormatFactory.card_format_class
+	      CardFormatFactory.card_format_class
       end
 
       def story(story_id, colored_stripe=true)
@@ -23,9 +24,22 @@ module PivotalToPdf
         card_format.new(story, colored_stripe).write_to
       end
 
+      def stories( iteration_token )
+        iterations = Iteration.find(:all, :params => {:group => iteration_token})
+        stories = iterations.map{|i| i.stories }.flatten.compact
+        card_format.new( stories, false ).write_to
+      end
+
       def iteration(iteration_token, colored_stripe=true)
         iteration = Iteration.find(:all, :params => {:group => iteration_token}).first
         card_format.new(iteration, colored_stripe).write_to
+      end
+
+      def iterations(iteration_token, colored_stripe=true)
+        iterations = Iteration.find(:all, :params => {:group => iteration_token})
+        iterations.each do |iteration|
+          card_format.new(iteration, colored_stripe).write_to
+        end
       end
 
     end
