@@ -1,13 +1,13 @@
 module PivotalToPdf
   class Story < Pivotal
+  
     def label_text
       return "" if !self.respond_to?(:labels) || self.labels.nil? || self.labels.empty?
       labels.gsub(',', ',  ')
     end
 
     def points
-      return "" unless self.feature?
-      "Points: " + (self.respond_to?(:estimate) && !self.estimate.eql?(-1) ? self.estimate.to_s : "Not yet estimated")
+      "Points: " + (self.respond_to?(:estimate) && !self.estimate.eql?(-1) ? self.estimate.to_s : "- ? -")
     end
 
     def state
@@ -33,7 +33,11 @@ module PivotalToPdf
     private
 
     def formatted_output(field)
-      SimpleTextFormatter.new(send(field)).output
+      begin
+        SimpleTextFormatter.new(send(field)).output
+      rescue NoMethodError
+        return ''
+      end
     end
 
     ["feature", "bug", "chore", "release"].each do |type_str|

@@ -25,7 +25,9 @@ module PivotalToPdf
     end
 
     def draw_card_with( pdf, story, index, opts, overflow = nil)
-
+      
+      puts story.formatted_name
+      
       if overflow.nil? || overflow.empty?
         title = story.formatted_name
       else
@@ -76,6 +78,18 @@ module PivotalToPdf
 	           :align  => :center,
 	           :rotate => 90,
 	           :rotate_around => :lower_left
+
+      if story.respond_to? :other_id
+       
+	        pdf.text_box story.other_id,
+	           :at     => [opts[:left_margin]-4, pdf.bounds.bottom + opts[:title_size]],
+	           :width  => opts[:page_height] - opts[:page_margin] * 2,
+	           :size   => opts[:title_size],
+	           :style  => :bold,
+	           :align  => :left,
+	           :rotate => 90,
+	           :rotate_around => :lower_left
+      end
       
 	    return overflow_desc       
     end
