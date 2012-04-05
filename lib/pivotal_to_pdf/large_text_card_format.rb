@@ -16,7 +16,7 @@ module PivotalToPdf
         @stories  = story_or_iteration
         @pdf_name = 'backlog'
       when Iteration
-        @stories  = story_or_iteration        
+        @stories  = story_or_iteration.stories
         @pdf_name = "iteration-#{story_or_iteration.id}"
       when Story
         @stories = [story_or_iteration]
