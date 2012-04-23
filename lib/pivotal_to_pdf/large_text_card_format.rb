@@ -103,7 +103,7 @@ module PivotalToPdf
         :desc_size    =>  9.0,
         :status_size  => 12.5,
         :kind_size    => 12.5,
-        :desc_height  =>  3.3.in,
+        :desc_height  =>  3.2.in,
         :page_width   => 11.0.in/2,
         :page_height  =>  8.5.in/2,
         :page_margin  =>  0.2.in,
@@ -118,7 +118,7 @@ module PivotalToPdf
         opts[:left_margin] = pdf.bounds.left   + opts[:pad_for_type]  
         opts[:desc_y]      = pdf.bounds.top    - opts[:title_height]
         opts[:status_y]    = pdf.bounds.bottom + opts[:status_size]
-        opts[:label_y]     = opts[:status_y]
+        opts[:label_y]     = opts[:status_y] + opts[:status_size]
 
         stories.each_with_index do |story, index|
           next if story.story_type == 'release'
