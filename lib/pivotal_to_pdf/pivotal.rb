@@ -1,5 +1,8 @@
 module PivotalToPdf
   class Pivotal < ActiveResource::Base
+    
+    self.format = :xml
+    
     def self.inherited(sub)
       c = ::PivotalToPdf::DiskConfig.config
       sub.site = "https://www.pivotaltracker.com/services/v3/projects/#{c['project_id']}"
