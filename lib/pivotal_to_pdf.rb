@@ -24,10 +24,14 @@ module PivotalToPdf
         card_format.new(story, colored_stripe).write_to
       end
 
-      def stories( iteration_token )
-        iterations = Iteration.find(:all, :params => {:group => iteration_token})
-        stories = iterations.map{|i| i.stories }.flatten.compact
-        card_format.new( stories, false ).write_to
+      def stories( iteration_token, colored_stripe=true )
+        if ['current','backlog', 'current_and_backlog'].include?( iteration_token.to_s )
+          iterations = Iteration.find(:all, :params => {:group => iteration_token})
+          stories = iterations.map{|i| i.stories }.flatten.compact
+        else
+          stories = Story.find(:all, :params => {:group => iteration_token})
+        end
+        card_format.new( stories, colored_stripe ).write_to
       end
 
       def iteration(iteration_token, colored_stripe=true)
