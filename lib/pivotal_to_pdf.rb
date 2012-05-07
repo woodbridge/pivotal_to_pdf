@@ -29,7 +29,7 @@ module PivotalToPdf
           iterations = Iteration.find(:all, :params => {:group => iteration_token})
           stories = iterations.map{|i| i.stories }.flatten.compact
         else
-          stories = Story.find(:all, :params => {:group => iteration_token})
+          stories = Story.find(:all, :params => { :filter => iteration_token })
         end
         card_format.new( stories, colored_stripe ).write_to
       end
