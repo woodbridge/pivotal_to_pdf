@@ -124,7 +124,14 @@ module PivotalToPdf
           next if story.story_type == 'release'
           overflow = nil
           loop do
-            overflow = draw_card_with( pdf, story, index, opts, overflow )
+            begin
+              overflow = draw_card_with( pdf, story, index, opts, overflow )
+            rescue => e
+              $stderr.print "Could not print card for story: "
+              $stderr.print "#{story.name}." if story.respond_to?(:name)
+              $stderr.print e
+              overflow = nil
+            end
             break if overflow.nil? || overflow.empty? 
             pdf.start_new_page
           end
